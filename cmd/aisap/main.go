@@ -33,8 +33,8 @@ import (
 	"syscall"
 
 	clr "github.com/gookit/color"
-	aisap "github.com/mgord9518/aisap"
-	permissions "github.com/mgord9518/aisap/permissions"
+	aisap "github.com/xplshn/aisap"
+	permissions "github.com/xplshn/aisap/permissions"
 	check "github.com/mgord9518/aisap/spooky"
 	cli "github.com/mgord9518/cli"
 	flag "github.com/spf13/pflag"
