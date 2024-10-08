@@ -205,18 +205,18 @@ func ExpandGenericDir(str string) string {
 
 	xdgDirs := map[string]string{
 		"xdg-home":        xdg.Home,
-		"xdg-desktop":     filepath.Join(xdg.Home, "Desktop"),
-		"xdg-download":    filepath.Join(xdg.Home, "Downloads"),
-		"xdg-documents":   filepath.Join(xdg.Home, "Documents"),
-		"xdg-music":       filepath.Join(xdg.Home, "Music"),
-		"xdg-pictures":    filepath.Join(xdg.Home, "Pictures"),
-		"xdg-videos":      filepath.Join(xdg.Home, "Videos"),
-		"xdg-templates":   filepath.Join(xdg.Home, "Templates"),
-		"xdg-publicshare": filepath.Join(xdg.Home, "Share"),
-		"xdg-config":      filepath.Join(xdg.Home, ".config"),
-		"xdg-cache":       filepath.Join(xdg.Home, ".cache"),
-		"xdg-data":        filepath.Join(xdg.Home, ".local/share"),
-		"xdg-state":       filepath.Join(xdg.Home, ".local/state"),
+		"xdg-desktop":     xdg.UserDirs.Desktop,
+		"xdg-download":    xdg.UserDirs.Download,
+		"xdg-documents":   xdg.UserDirs.Documents,
+		"xdg-music":       xdg.UserDirs.Music,
+		"xdg-pictures":    xdg.UserDirs.Pictures,
+		"xdg-videos":      xdg.UserDirs.Videos,
+		"xdg-templates":   xdg.UserDirs.Templates,
+		"xdg-publicshare": xdg.UserDirs.PublicShare,
+		"xdg-config":      xdg.ConfigHome,
+		"xdg-cache":       xdg.CacheHome,
+		"xdg-data":        xdg.DataHome,
+		"xdg-state":       xdg.StateHome,
 	}
 
 	if present {
