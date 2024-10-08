@@ -18,9 +18,9 @@ import (
 
 	squashfs "github.com/CalebQ42/squashfs"
 	xdg "github.com/adrg/xdg"
-	helpers "github.com/mgord9518/aisap/helpers"
-	permissions "github.com/mgord9518/aisap/permissions"
-	profiles "github.com/mgord9518/aisap/profiles"
+	helpers "github.com/xplshn/aisap/helpers"
+	permissions "github.com/xplshn/aisap/permissions"
+	profiles "github.com/xplshn/aisap/profiles"
 	ini "gopkg.in/ini.v1"
 )
 
@@ -321,7 +321,7 @@ func (ai *AppImage) ExtractFileReader(path string) (io.ReadCloser, error) {
 	r := f.(*squashfs.File)
 
 	if r.IsSymlink() {
-		r = r.GetSymlinkFile()
+		r = r.GetSymlinkFile().(*squashfs.File) // Cast to *squashfs.File
 	}
 
 	return r, err
@@ -385,7 +385,7 @@ func (ai *AppImage) getEntry() (io.Reader, error) {
 
 	// Extract from SquashFS if type 2 or zip fails
 	if ai.imageType == 2 || err != nil {
-		// Return all `.desktop` files. A vadid AppImage should only have one
+		// Return all `.desktop` files. A valid AppImage should only have one
 		var fp []string
 
 		fp, err = ai.reader.Glob("*.desktop")
@@ -398,7 +398,7 @@ func (ai *AppImage) getEntry() (io.Reader, error) {
 		r := entry.(*squashfs.File)
 
 		if r.IsSymlink() {
-			r = r.GetSymlinkFile()
+			r = r.GetSymlinkFile().(*squashfs.File) // Cast to *squashfs.File
 		}
 
 		return r, err

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"sort"
 
-	profiles "github.com/mgord9518/aisap/profiles"
+	profiles "github.com/xplshn/aisap/profiles"
 )
 
 // Process flags

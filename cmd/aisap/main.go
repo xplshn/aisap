@@ -33,10 +33,10 @@ import (
 	"syscall"
 
 	clr "github.com/gookit/color"
-	aisap "github.com/xplshn/aisap"
 	permissions "github.com/xplshn/aisap/permissions"
-	check "github.com/mgord9518/aisap/spooky"
-	cli "github.com/mgord9518/cli"
+	check "github.com/xplshn/aisap/spooky"
+	aisap "github.com/xplshn/aisap"
+	cli "github.com/xplshn/mgord-cli-fixed"
 	flag "github.com/spf13/pflag"
 	ini "gopkg.in/ini.v1"
 )

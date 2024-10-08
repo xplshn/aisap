@@ -5,7 +5,7 @@ import (
 	"os"
 
 	clr "github.com/gookit/color"
-	aisap "github.com/mgord9518/aisap"
+	aisap "github.com/xplshn/aisap"
 	flag "github.com/spf13/pflag"
 )
 

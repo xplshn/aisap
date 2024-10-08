@@ -5,8 +5,8 @@ import (
 	"errors"
 	"strings"
 
-	helpers "github.com/mgord9518/aisap/helpers"
-	permissions "github.com/mgord9518/aisap/permissions"
+	helpers "github.com/xplshn/aisap/helpers"
+	permissions "github.com/xplshn/aisap/permissions"
 
 	_ "embed"
 )

@@ -197,35 +197,35 @@ func ExpandDir(str string) string {
 	return expandEither(str, xdgDirs)
 }
 
-//func ExpandGenericDir(str string) string {
-//	home, present := os.LookupEnv("HOME")
-//	newHome, _ := RealHome()
-//	os.Setenv("HOME", newHome)
-//	xdg.Reload()
-//
-//	xdgDirs := map[string]string{
-//		"xdg-home":        xdg.Home,
-//		"xdg-desktop":     filepath.Join(xdg.Home, "Desktop"),
-//		"xdg-download":    filepath.Join(xdg.Home, "Downloads"),
-//		"xdg-documents":   filepath.Join(xdg.Home, "Documents"),
-//		"xdg-music":       filepath.Join(xdg.Home, "Music"),
-//		"xdg-pictures":    filepath.Join(xdg.Home, "Pictures"),
-//		"xdg-videos":      filepath.Join(xdg.Home, "Videos"),
-//		"xdg-templates":   filepath.Join(xdg.Home, "Templates"),
-//		"xdg-publicshare": filepath.Join(xdg.Home, "Share"),
-//		"xdg-config":      filepath.Join(xdg.Home, ".config"),
-//		"xdg-cache":       filepath.Join(xdg.Home, ".cache"),
-//		"xdg-data":        filepath.Join(xdg.Home, ".local/share"),
-//		"xdg-state":       filepath.Join(xdg.Home, ".local/state"),
-//	}
-//
-//	if present {
-//		os.Setenv("HOME", home)
-//	}
-//	xdg.Reload()
-//
-//	return expandEither(str, xdgDirs)
-//}
+func ExpandGenericDir(str string) string {
+	home, present := os.LookupEnv("HOME")
+	newHome, _ := RealHome()
+	os.Setenv("HOME", newHome)
+	xdg.Reload()
+
+	xdgDirs := map[string]string{
+		"xdg-home":        xdg.Home,
+		"xdg-desktop":     filepath.Join(xdg.Home, "Desktop"),
+		"xdg-download":    filepath.Join(xdg.Home, "Downloads"),
+		"xdg-documents":   filepath.Join(xdg.Home, "Documents"),
+		"xdg-music":       filepath.Join(xdg.Home, "Music"),
+		"xdg-pictures":    filepath.Join(xdg.Home, "Pictures"),
+		"xdg-videos":      filepath.Join(xdg.Home, "Videos"),
+		"xdg-templates":   filepath.Join(xdg.Home, "Templates"),
+		"xdg-publicshare": filepath.Join(xdg.Home, "Share"),
+		"xdg-config":      filepath.Join(xdg.Home, ".config"),
+		"xdg-cache":       filepath.Join(xdg.Home, ".cache"),
+		"xdg-data":        filepath.Join(xdg.Home, ".local/share"),
+		"xdg-state":       filepath.Join(xdg.Home, ".local/state"),
+	}
+
+	if present {
+		os.Setenv("HOME", home)
+	}
+	xdg.Reload()
+
+	return expandEither(str, xdgDirs)
+}
 
 func ExtractResource(aiPath string, src string, dest string) error {
 	inF, err := ExtractResourceReader(aiPath, src)

@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	xdg "github.com/adrg/xdg"
-	helpers "github.com/mgord9518/aisap/helpers"
+	helpers "github.com/xplshn/aisap/helpers"
 )
 
 // mount mounts the requested AppImage `src` to `dest`

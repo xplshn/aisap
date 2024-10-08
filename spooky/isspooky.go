@@ -1,7 +1,6 @@
 package spooky
 
 import (
-	"encoding/json"
 	"strings"
 
 	_ "embed"
@@ -17,7 +16,8 @@ var jsonDatabase []byte
 
 // TODO: finish (need state machine to parse env variables out of the JSON)
 func isSpookyNew(path string) bool {
-
+// unimplemented
+	return false
 }
 
 // Check if a file or directory is spooky (sandbox escape vector or possibly
