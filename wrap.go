@@ -80,7 +80,6 @@ func (ai AppImage) WrapArgs(perms *permissions.AppImagePerms, args []string) ([]
 }
 
 func (ai *AppImage) mainWrapArgs(perms *permissions.AppImagePerms) []string {
-	uid := strconv.Itoa(os.Getuid())
 	home, present := unsetHome()
 	defer restoreHome(home, present)
 
@@ -91,25 +90,25 @@ func (ai *AppImage) mainWrapArgs(perms *permissions.AppImagePerms) []string {
 		"--setenv", "APPDIR", "/tmp/.mount_" + ai.md5,
 		"--setenv", "APPIMAGE", filepath.Join("/app", path.Base(ai.Path)),
 		"--setenv", "ARGV0", filepath.Join(path.Base(ai.Path)),
-		"--setenv", "XDG_DESKTOP_DIR", filepath.Join(xdg.Home, "Desktop"),
-		"--setenv", "XDG_DOWNLOAD_DIR", filepath.Join(xdg.Home, "Downloads"),
-		"--setenv", "XDG_DOCUMENTS_DIR", filepath.Join(xdg.Home, "Documents"),
-		"--setenv", "XDG_MUSIC_DIR", filepath.Join(xdg.Home, "Music"),
-		"--setenv", "XDG_PICTURES_DIR", filepath.Join(xdg.Home, "Pictures"),
-		"--setenv", "XDG_VIDEOS_DIR", filepath.Join(xdg.Home, "Videos"),
-		"--setenv", "XDG_TEMPLATES_DIR", filepath.Join(xdg.Home, "Templates"),
-		"--setenv", "XDG_PUBLICSHARE_DIR", filepath.Join(xdg.Home, "Share"),
-		"--setenv", "XDG_DATA_HOME", filepath.Join(xdg.Home, ".local/share"),
-		"--setenv", "XDG_CONFIG_HOME", filepath.Join(xdg.Home, ".config"),
-		"--setenv", "XDG_CACHE_HOME", filepath.Join(xdg.Home, ".cache"),
-		"--setenv", "XDG_STATE_HOME", filepath.Join(xdg.Home, ".local/state"),
-		"--setenv", "XDG_RUNTIME_DIR", filepath.Join("/run/user", uid),
+		"--setenv", "XDG_DESKTOP_DIR",     xdg.UserDirs.Desktop,
+		"--setenv", "XDG_DOWNLOAD_DIR",    xdg.UserDirs.Download,
+		"--setenv", "XDG_DOCUMENTS_DIR",   xdg.UserDirs.Documents,
+		"--setenv", "XDG_MUSIC_DIR",       xdg.UserDirs.Music,
+		"--setenv", "XDG_PICTURES_DIR",    xdg.UserDirs.Pictures,
+		"--setenv", "XDG_VIDEOS_DIR",      xdg.UserDirs.Videos,
+		"--setenv", "XDG_TEMPLATES_DIR",   xdg.UserDirs.Templates,
+		"--setenv", "XDG_PUBLICSHARE_DIR", xdg.UserDirs.PublicShare,
+		"--setenv", "XDG_DATA_HOME",       xdg.DataHome,
+		"--setenv", "XDG_CONFIG_HOME",     xdg.ConfigHome,
+		"--setenv", "XDG_CACHE_HOME",      xdg.CacheHome,
+		"--setenv", "XDG_STATE_HOME",      xdg.StateHome,
+		"--setenv", "XDG_RUNTIME_DIR",     xdg.RuntimeDir,
 		"--die-with-parent",
 		"--perms", "0700",
-		"--dir", filepath.Join("/run/user", uid),
+		"--dir", filepath.Join(xdg.RuntimeDir),
 		"--dev", "/dev",
 		"--proc", "/proc",
-		"--bind", filepath.Join(xdg.CacheHome, "appimage", ai.md5), filepath.Join(xdg.Home, ".cache"),
+		"--bind", filepath.Join(xdg.CacheHome, "appimage", ai.md5), xdg.CacheHome,
 		"--ro-bind-try", ai.resolve("opt"), "/opt",
 		"--ro-bind-try", ai.resolve("bin"), "/bin",
 		"--ro-bind-try", ai.resolve("sbin"), "/sbin",
@@ -133,11 +132,11 @@ func (ai *AppImage) mainWrapArgs(perms *permissions.AppImagePerms) []string {
 			"--ro-bind-try", ai.resolve("usr"), "/usr",
 			"--ro-bind-try", ai.resolve("etc"), "/etc",
 			"--ro-bind-try", ai.resolve("/run/systemd"), "/run/systemd",
-			"--ro-bind-try", filepath.Join(xdg.Home, ".fonts"), filepath.Join(xdg.Home, ".fonts"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "fontconfig"), filepath.Join(xdg.Home, ".config", "fontconfig"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-3.0"), filepath.Join(xdg.Home, ".config", "gtk-3.0"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "kdeglobals"), filepath.Join(xdg.Home, ".config", "kdeglobals"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"), filepath.Join(xdg.Home, ".config", "lxde", "lxde.conf"),
+			"--ro-bind-try", filepath.Join(xdg.Home, ".fonts"), filepath.Join(xdg.Home, ".fonts"), // What about adding xdg.FontDirs dynamically?
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "fontconfig"), filepath.Join(xdg.ConfigHome, "fontconfig"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-3.0"), filepath.Join(xdg.ConfigHome, "gtk-3.0"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "kdeglobals"), filepath.Join(xdg.ConfigHome, "kdeglobals"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"), filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"),
 		}...)
 		// Level 2 grants access to fewer system files, and all themes
 		// Likely to add more files here for compatability.
@@ -160,10 +159,10 @@ func (ai *AppImage) mainWrapArgs(perms *permissions.AppImagePerms) []string {
 			"--ro-bind-try", ai.resolve("usr/share/glib-2.0"), "/usr/share/glib-2.0",
 			"--ro-bind-try", ai.resolve("usr/share/terminfo"), "/usr/share/terminfo",
 			"--ro-bind-try", filepath.Join(xdg.Home, ".fonts"), filepath.Join(xdg.Home, ".fonts"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "fontconfig"), filepath.Join(xdg.Home, ".config", "fontconfig"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-3.0"), filepath.Join(xdg.Home, ".config", "gtk-3.0"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "kdeglobals"), filepath.Join(xdg.Home, ".config", "kdeglobals"),
-			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"), filepath.Join(xdg.Home, ".config", "lxde", "lxde.conf"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "fontconfig"), filepath.Join(xdg.ConfigHome, "fontconfig"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-3.0"), filepath.Join(xdg.ConfigHome, "gtk-3.0"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "kdeglobals"), filepath.Join(xdg.ConfigHome, "kdeglobals"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"), filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"),
 		}...)
 	}
 
