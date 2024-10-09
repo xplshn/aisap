@@ -135,6 +135,9 @@ func (ai *AppImage) mainWrapArgs(perms *permissions.AppImagePerms) []string {
 			"--ro-bind-try", filepath.Join(xdg.Home, ".fonts"), filepath.Join(xdg.Home, ".fonts"), // What about adding xdg.FontDirs dynamically?
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "fontconfig"), filepath.Join(xdg.ConfigHome, "fontconfig"),
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-3.0"), filepath.Join(xdg.ConfigHome, "gtk-3.0"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-4.0"), filepath.Join(xdg.ConfigHome, "gtk-4.0"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "qt5ct"), filepath.Join(xdg.ConfigHome, "qt5ct"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "qt6ct"), filepath.Join(xdg.ConfigHome, "qt6ct"),
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "kdeglobals"), filepath.Join(xdg.ConfigHome, "kdeglobals"),
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"), filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"),
 		}...)
@@ -161,6 +164,9 @@ func (ai *AppImage) mainWrapArgs(perms *permissions.AppImagePerms) []string {
 			"--ro-bind-try", filepath.Join(xdg.Home, ".fonts"), filepath.Join(xdg.Home, ".fonts"),
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "fontconfig"), filepath.Join(xdg.ConfigHome, "fontconfig"),
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-3.0"), filepath.Join(xdg.ConfigHome, "gtk-3.0"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "gtk-4.0"), filepath.Join(xdg.ConfigHome, "gtk-4.0"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "qt5ct"), filepath.Join(xdg.ConfigHome, "qt5ct"),
+			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "qt6ct"), filepath.Join(xdg.ConfigHome, "qt6ct"),
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "kdeglobals"), filepath.Join(xdg.ConfigHome, "kdeglobals"),
 			"--ro-bind-try", filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"), filepath.Join(xdg.ConfigHome, "lxde", "lxde.conf"),
 		}...)
