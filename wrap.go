@@ -31,14 +31,14 @@ func (ai *AppImage) Sandbox(perms *permissions.AppImagePerms, args []string) err
 
 	// Tell AppImages not to ask for integration
 	if perms.DataDir {
-		if !helpers.DirExists(filepath.Join(ai.dataDir, ".local/share/appimagekit")) {
+		if !helpers.DirExists(filepath.Join(ai.dataDir, ".local/share/appimagekit")) { // It should always be hardcoded to ~/.local/share/appimagekit. Because the appimage integrators expect this file at this dir
 			err := os.MkdirAll(filepath.Join(ai.dataDir, ".local/share/appimagekit"), 0744)
 			if err != nil {
 				return err
 			}
 		}
 
-		noIntegrate, _ := os.Create(filepath.Join(ai.dataDir, ".local/share/appimagekit/no_desktopintegration"))
+		noIntegrate, _ := os.Create(filepath.Join(ai.dataDir, ".local/share/appimagekit/no_desktopintegration")) // It should always be hardcoded to ~/.local/share/appimagekit. Because the appimage integrators expect this file at this dir
 		noIntegrate.Close()
 	}
 
